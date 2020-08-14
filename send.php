@@ -8,8 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 $request = json_decode(file_get_contents('php://input'), TRUE);
 
 $type = null;
-//simplify testing - use $_REQUEST instead of $_POST
-if (!empty($request['type']) && in_array($request['type'], ['interestedInNewBoat', 'mainOffice', 'messageTo'])) {
+if (
+	!empty($request['type'])
+	&& in_array($request['type'], ['interestedInNewBoat', 'mainOffice', 'messageTo', 'subscribeForm', 'contactDealer'])
+) {
 	$type = $request['type'];
 }
 
@@ -17,6 +19,8 @@ switch ($type) {
 	case 'messageTo':
 	case 'mainOffice':
 	case 'interestedInNewBoat':
+	case 'subscribeForm':
+	case 'contactDealer':
 		return interestedInNewBoat();
 
 	default:
